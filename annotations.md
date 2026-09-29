@@ -1,46 +1,47 @@
 # NestJS — Udemy — LOM
 
-- Module
-  - serve para
-    - organizar o código
-    - encapsular coisas
-  - App Module
-    - é o módulo principal da aplicação
-    - sempre que se cria um novo módulo, ele deve estar incluído
-      dentro do array de imports do AppModule, pois o NestJS
-      carrega esse módulo ao iniciar a aplicação (main.js)
-      e assim é feita uma cadeia de dependências, isto é,
-      um módulo vai importando o outro
+## Section 4
 
-- Controller
-  - http://localhost:3000/
-    - http:// → protocolo
-    - localhost → domínio (servidor)
-    - :3000 → porta de acesso
-    - / → recurso (normalmente, o recurso '/' condiz ao recurso raiz
-      da aplicação)
+### Routing
 
-  - todo método dentro de um nest Controller precisa ser decorado
-    com o nome do método HTTP respectivo, a saber:
-    @Get | @Post | @Patch | @Delete | etc...
-    Sem isso, o nest retornará uma mensagem de erro ao tentar fazer
-    uma requisição para o recurso desse Controller, pois ele, de fato,
-    não existe
+`@Param()` → retorna um objeto
+`@Param('id')` → já retorna o valor da propriedade 'id'
 
-- Service
-  - A maioria dos sistema que usam a arquitetura REST precisa de
-    lógica entre a requisição para o servidor e a resposta dele.
-    É aí que entra a camada de serviços. O NestJS chama o Service
-    de Provider também.
+`@Body('key')` → cuidado! Pois, isso pode fazer com que a
+propriedade deixe de ser validada pelo corpo/objeto que veio
+da requisição. O Coach-Luiz ressaltou que, caso essa prática
+seja necessária, deve-ser testar bem o comportamento desse
+valor.
 
-  - Toda classe da camada service que tem por objetivo ser usada
-    em outra classe do nest deve possui o decorator `@Injectable`,
-    pois, quando for utilizada, o nest saberá que é uma classe
-    injetável por meio do seu tipo. Esse decorator faz com que a
-    classe faça parte do Sistema de Injeção de Dependência do nest.
+### Http Status Code
 
-  - Ficar atento ao criar o service, pois ele deve constar no
-    contexto do módulo respectivo, isto é, deve ser importado e incluído
-    no array de 'providers' que fica dentro do decorator `@Module({})`.
+- Para recursos comuns (CRUD | GET, POST, PUT/PATCH, DELETE),
+  o nest já consegui definir um código HTTP padrão. Entretanto,
+  há alguma situações que é recomendável o DEV definir esse
+  status code, para uma melhor depuração ou até informação
+  para quem estiver acessando o recurso/rota.
 
-### Término da Seção 1, 2 & 3.
+- _Hint: HttpsStatus.ENUM_VALUE_
+
+### Http Methods
+
+PATCH → é utilizado para atualizar dados de um recurso
+PUT → é utilizado para atualizar um recurso inteiro
+
+### Query Parameters
+
+- Comumente usado para paginação
+
+### Validation
+
+- `@IsOptional`
+  - Torna a **chave** do DTO como opcional, isto é,
+    ele checa se a chave está ou não presente.
+    Se estiver presente, aplica os outros decorators
+    presentes na propriedade, se não ignora todos.
+
+- ```ts
+  export class UpdateEntityDto extends PartialType(CreateEntityDto, {
+    skipNullProperties: false,
+  }) {} // Por padrão, esse classe utilitária permite valores `null`.
+  ```
