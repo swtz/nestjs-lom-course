@@ -1,28 +1,39 @@
 @baseUrl = http://localhost:3000
 
+# PESSOAS
+### Cria uma pessoa
+POST {{baseUrl}}/pessoas/
+Content-Type: application/json
+
+{
+  "email": "b@a.com",
+  "password": "123456",
+  "nome": "Laura"
+}
+
 # RECADOS
 ### Lista todos os recados
 GET {{baseUrl}}/recados/
 ?limit=10
 &offset=0
 ### Lista apenas um recado
-GET {{baseUrl}}/recados/2/
+GET {{baseUrl}}/recados/4/
 ### Cria um recado
 POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "texto": "4 NOVO Recado",
-    "de": "Joana",
-    "para": "João"
+  "texto": "Recado amistoso",
+  "deId": 8,
+  "paraId": 3
 }
 ### Atualiza um recado
 PATCH {{baseUrl}}/recados/2/
 Content-Type: application/json
 
 {
-    "texto": "Recado",
-    "lido": false
+  "texto": "Recado",
+  "lido": true
 }
 ### Apaga um recado
 DELETE {{baseUrl}}/recados/2/

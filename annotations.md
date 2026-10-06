@@ -45,3 +45,17 @@ PUT → é utilizado para atualizar um recurso inteiro
     skipNullProperties: false,
   }) {} // Por padrão, esse classe utilitária permite valores `null`.
   ```
+
+### Pagination
+
+- _"A paginação de qualquer site que utiliza consultas SQL é a combinação dos parâmetros:"_
+  - `limit` & `offset`
+  - limit → é a quantidade de itens exibidos por página
+  - offset → é a quantidade de páginas que a consulta deve "pular"
+  - Exemplo:
+    - `limit = 10`, logo `offset = 0` (1 página)
+    - `limit = 10`, logo `offset = 10` (2 página)
+    - `limit = 10`, logo `offset = 20` (3 página)
+      e assim sucessivamente...
+- Obs.: cuidado com a ordenação das consultas, pois isso pode confundir o usuário durante a navegação
+  entre as páginas
